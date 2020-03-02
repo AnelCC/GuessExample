@@ -1,17 +1,22 @@
 package com.anelcc.guessexample.screen.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.anelcc.guessexample.R
 import com.anelcc.guessexample.databinding.GameFragmentBinding
 import androidx.navigation.fragment.findNavController
 
 
 public class GameFragment : Fragment() {
+
+    //instance the view model for notify and create a reference
+    private lateinit var viewModel: GameViewModel
 
     // The current word
     private var word = ""
@@ -34,6 +39,11 @@ public class GameFragment : Fragment() {
             container,
             false
         )
+
+        Log.i("GameFragment", "Called ViewModelProvider.Of")
+
+        // Create a new instance by specific ViewModel: is associate with the ui and the view
+        viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
         resetList()
         nextWord()
