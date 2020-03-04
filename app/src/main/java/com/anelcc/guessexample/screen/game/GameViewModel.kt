@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 class GameViewModel : ViewModel(){
 
     // The current word
-    var word = ""
+    var word = MutableLiveData<String>()
 
     // The current score
     var score = MutableLiveData<Int>()
