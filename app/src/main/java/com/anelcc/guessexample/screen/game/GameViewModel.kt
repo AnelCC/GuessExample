@@ -68,7 +68,7 @@ class GameViewModel : ViewModel(){
         if (wordList.isEmpty()) {
             //gameFinished()
         } else {
-            word = wordList.removeAt(0)
+            word.value = wordList.removeAt(0)
         }
     }
     /** Methods for buttons presses **/
