@@ -47,8 +47,6 @@ public class GameFragment : Fragment() {
             updateWordText()
         }
 
-        viewModel.score.value = -10000
-
         /** Setting up LiveData observation relationship **/
         viewModel.score.observe(this, Observer { newScore ->
             binding.scoreText.text = newScore.toString()
