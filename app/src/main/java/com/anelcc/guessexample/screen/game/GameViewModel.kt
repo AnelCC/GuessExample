@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModel
 //The ViewModel never contains references to activities, fragments, or views.
 class GameViewModel : ViewModel(){
 
-    // The current word
     var word = MutableLiveData<String>()
 
-    // The current score
     // internal
     private val _score = MutableLiveData<Int>()
     //external
