@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -59,9 +60,10 @@ public class GameFragment : Fragment() {
      * Called when the game is finished
      */
     private fun gameFinished() {
-        val currentScore = viewModel.score.value ?: 0
+        /*val currentScore = viewModel.score.value ?: 0
         val action = GameFragmentDirections.actionGameToScore(currentScore)
-        findNavController().navigate(action)
+        findNavController().navigate(action)*/
+        Toast.makeText(this.activity, "Game has finished", Toast.LENGTH_SHORT).show()
     }
 
     /** Methods for updating the UI **/
