@@ -81,6 +81,7 @@ class GameViewModel : ViewModel(){
         //Select and remove a word from the list
         if (wordList.isEmpty()) {
             //gameFinished()
+            _eventGameFinish.value =true
         } else {
             word.value = wordList.removeAt(0)
         }
