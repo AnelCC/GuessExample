@@ -1,6 +1,7 @@
 package com.anelcc.guessexample.screen.game
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 //The ViewModel is a stable place to store the data to display in the associated UI controller.
@@ -8,11 +9,14 @@ import androidx.lifecycle.ViewModel
 //The ViewModel never contains references to activities, fragments, or views.
 class GameViewModel : ViewModel(){
 
-    // The current word
     var word = MutableLiveData<String>()
 
-    // The current score
-    var score = MutableLiveData<Int>()
+    // internal
+    private val _score = MutableLiveData<Int>()
+    //external
+    val score: LiveData<Int>
+        get() = _score
+
 
     // The list of words - the front of the list is the next word to guess
     private lateinit var wordList: MutableList<String>
@@ -20,7 +24,7 @@ class GameViewModel : ViewModel(){
     init {
         resetList()
         nextWord()
-        score.value = 0
+        _score.value = 0
         Log.i("GameViewModel", "GameViewModel created")
     }
 
@@ -75,12 +79,12 @@ class GameViewModel : ViewModel(){
 
     fun onSkip() {
         //no safe
-        score.value = (score.value)?.minus(1)
+        _score.value = (score.value)?.minus(1)
         nextWord()
     }
 
     fun onCorrect() {
-        score.value = (score.value)?.plus(1)
+        _score.value = (score.value)?.plus(1)
         nextWord()
     }
 }
