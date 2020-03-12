@@ -1,5 +1,7 @@
 package com.anelcc.guessexample.screen.game
 
+import android.os.CountDownTimer
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +21,17 @@ class GameViewModel : ViewModel(){
         const val COUNTDOWN_TIME = 60000L
     }
 
-    var word = MutableLiveData<String>()
+    private val timer: CountDownTimer
+
+    private val _currentTime = MutableLiveData<Long>()
+    val currentTime: LiveData<Long>
+        get() = _currentTime
+
+
+    // The current word
+    private val _word = MutableLiveData<String>()
+    val word: LiveData<String>
+        get() = _word
 
     // internal
     private val _score = MutableLiveData<Int>()
@@ -35,10 +47,25 @@ class GameViewModel : ViewModel(){
         get() = _eventGameFinish
 
     init {
-        _eventGameFinish.value = false
         resetList()
         nextWord()
         _score.value = 0
+
+        timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                // TODO implement what should happen each tick of the timer
+                _currentTime.value = (millisUntilFinished / ONE_SECOND)
+            }
+
+            override fun onFinish() {
+                // TODO implement what should happen when the timer finishes
+                _currentTime.value = DONE
+                _eventGameFinish.value = true
+            }
+        }
+        //DateUtils.formatElapsedTime(newTime)
+
     }
 
     init {
@@ -50,6 +77,7 @@ class GameViewModel : ViewModel(){
 
     override fun onCleared() {
         super.onCleared()
+        timer.cancel()
         Log.i("GameViewModel", "GameViewModel destroyed!")
     }
 
@@ -91,10 +119,8 @@ class GameViewModel : ViewModel(){
         //Select and remove a word from the list
         if (wordList.isEmpty()) {
             resetList()
-         //   _eventGameFinish.value =true
-        } else {
-            word.value = wordList.removeAt(0)
         }
+        _word.value = wordList.removeAt(0)
     }
     /** Methods for buttons presses **/
 
