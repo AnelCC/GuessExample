@@ -9,6 +9,16 @@ import androidx.lifecycle.ViewModel
 //The ViewModel never contains references to activities, fragments, or views.
 class GameViewModel : ViewModel(){
 
+    companion object {
+        // These represent different important times
+        // This is when the game is over
+        const val DONE = 0L
+        // This is the number of milliseconds in a second
+        const val ONE_SECOND = 1000L
+        // This is the total time of the game
+        const val COUNTDOWN_TIME = 60000L
+    }
+
     var word = MutableLiveData<String>()
 
     // internal
@@ -80,8 +90,8 @@ class GameViewModel : ViewModel(){
     private fun nextWord() {
         //Select and remove a word from the list
         if (wordList.isEmpty()) {
-            //gameFinished()
-            _eventGameFinish.value =true
+            resetList()
+         //   _eventGameFinish.value =true
         } else {
             word.value = wordList.removeAt(0)
         }
