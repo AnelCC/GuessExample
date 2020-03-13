@@ -1,6 +1,7 @@
 package com.anelcc.guessexample.screen.game
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -53,6 +54,10 @@ public class GameFragment : Fragment() {
             binding.scoreText.text = newScore.toString()
         })
 
+        // You can use DateUtils.formatElapsedTime to correctly format the long to a time string
+        viewModel.currentTime.observe(this, Observer { newTime ->
+            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
+        })
 
         viewModel.eventGameFinish.observe(this, Observer {hasFinish ->
             if (hasFinish){

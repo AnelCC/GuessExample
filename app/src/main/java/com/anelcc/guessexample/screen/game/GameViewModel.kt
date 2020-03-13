@@ -1,7 +1,6 @@
 package com.anelcc.guessexample.screen.game
 
 import android.os.CountDownTimer
-import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,7 +51,6 @@ class GameViewModel : ViewModel(){
         _score.value = 0
 
         timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
-
             override fun onTick(millisUntilFinished: Long) {
                 // TODO implement what should happen each tick of the timer
                 _currentTime.value = (millisUntilFinished / ONE_SECOND)
@@ -64,8 +62,6 @@ class GameViewModel : ViewModel(){
                 _eventGameFinish.value = true
             }
         }
-        //DateUtils.formatElapsedTime(newTime)
-
     }
 
     init {
@@ -75,6 +71,7 @@ class GameViewModel : ViewModel(){
         Log.i("GameViewModel", "GameViewModel created")
     }
 
+    //To avoid memory leaks, you should always cancel a CountDownTimer if you no longer need it.
     override fun onCleared() {
         super.onCleared()
         timer.cancel()
