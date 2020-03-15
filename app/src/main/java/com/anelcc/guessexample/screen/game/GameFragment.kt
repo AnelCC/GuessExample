@@ -59,9 +59,12 @@ public class GameFragment : Fragment() {
             binding.timerText.text = DateUtils.formatElapsedTime(newTime)
         })
 
+        // Sets up event listening to navigate the player when the game is finished
         viewModel.eventGameFinish.observe(this, Observer {hasFinish ->
             if (hasFinish){
-                gameFinished()
+                val currentScore = viewModel.score.value ?: 0
+                val action = GameFragmentDirections.actionGameToScore(currentScore)
+                findNavController().navigate(action)
                 viewModel.onGameFinishComplete()
             }
         })
