@@ -14,7 +14,8 @@ import androidx.navigation.fragment.navArgs
 
 
 class ScoreFragment : Fragment() {
-
+    private lateinit var viewModel: ScoreViewModel
+    private lateinit var viewModelFactory: ScoreViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +30,8 @@ class ScoreFragment : Fragment() {
             container,
             false
         )
+        viewModelFactory = arguments?.let { ScoreFragmentArgs.fromBundle(it).score }?.let { ScoreViewModelFactory(it) }!!
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ScoreViewModel::class.java)
 
         // Get args using by navArgs property delegate
         val scoreFragmentArgs by navArgs<ScoreFragmentArgs>()
